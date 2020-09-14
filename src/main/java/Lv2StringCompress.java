@@ -1,3 +1,5 @@
+
+
 public class Lv2StringCompress {
 
 /*
@@ -15,16 +17,55 @@ s의 길이는 1 이상 1,000 이하입니다.
 s는 알파벳 소문자로만 이루어져 있습니다.
 * */
 
-    public static void main(String[] args){
+        public static void main(String[] args){
 
-        int answer = new Lv2StringCompress().solution("abcabcabcabcdededededede");
+           int answer = new Lv2StringCompress().solution("abcabcabcabcdededededede");
 
-        System.out.println(answer);
-    }
+           System.out.println(answer);
+        }
 
-    public int solution(String s) {
-        int answer = 0;
-        return answer;
-    }
+        public int solution(String s) {
+            int answer = s.length() ;
+
+            for (int i = 1; i <= s.length()/2; i++) {
+                String aa = "";
+                String tmpStr = "";
+                int reCnt = 1;
+                for (int j = 0; j < s.length()/i; j++) {
+
+                    String nexTmp = s.substring(j*i, (j+1)*i);
+
+                    if(tmpStr.equals(nexTmp)){
+                        reCnt++;
+
+                    }else{
+
+                        if(reCnt == 1){
+                            aa += tmpStr;
+                        }else{
+                            aa += reCnt+tmpStr;
+                            reCnt = 1;
+                        }
+
+                        tmpStr = nexTmp;
+                    }
+
+                    if(j+1 == s.length()/i && reCnt==1){
+                        aa += tmpStr;
+                    }else if((j+1 == s.length()/i && reCnt>1)){
+                        aa += reCnt+tmpStr;
+                    }
+                }
+
+                if(s.length()%i != 0){
+                    aa+= s.substring(s.length()/i*i,s.length());
+                }
+
+                answer = Integer.min(aa.length(),answer);
+
+            }
+            return answer;
+        }
+
 
 }
