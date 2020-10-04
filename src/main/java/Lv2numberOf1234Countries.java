@@ -18,12 +18,14 @@ public class Lv2numberOf1234Countries {
 
     제한사항
     n은 500,000,000이하의 자연수 입니다.
+    *
+    *  이게 왜 시간초과가 되는걸까요..?
     * */
     public static void main(String[] args){
 
-        String answer = new Lv2numberOf1234Countries().solution(10);
+        String answer = new Lv2numberOf1234Countries().solution(500000000);
 
-        System.out.println(answer);
+        System.out.println("answer==="+answer);
     }
 
 
@@ -31,6 +33,18 @@ public class Lv2numberOf1234Countries {
 
             String answer = "";
 
+            while(n > 0){
+
+                int chn = n%3;
+                int dat = n/3;
+                if(chn == 0){
+                    answer = "4" +answer;
+                    n = (dat)-1;
+                }else{
+                    answer = chn+answer;
+                    n = dat;
+                }
+            }
 
             return answer;
         }
