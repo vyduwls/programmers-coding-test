@@ -31,22 +31,22 @@ public class Lv2numberOf1234Countries {
 
         public String solution(int n) {
 
-            String answer = "";
+            StringBuilder answer = new StringBuilder();
 
             while(n > 0){
 
                 int chn = n%3;
                 int dat = n/3;
                 if(chn == 0){
-                    answer = "4" +answer;
+                    answer = answer.append("4");
                     n = (dat)-1;
                 }else{
-                    answer = chn+answer;
+                    answer = answer.append(chn);
                     n = dat;
                 }
             }
 
-            return answer;
+            return answer.reverse().toString();
         }
 
 }
