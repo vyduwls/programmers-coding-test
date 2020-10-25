@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Lv2Printer {
 
     /*
@@ -32,9 +34,9 @@ priorities	location	return
 
     public static void main(String[] args){
 
-        int[] priorities = new int[]{2, 1, 3, 2};
+        int[] priorities = new int[] {1, 1, 9, 1, 1, 1};//{2, 1, 3, 2};
 
-        int answer = new Lv2Printer().solution(priorities,2);
+        int answer = new Lv2Printer().solution(priorities,0);
 
         System.out.println(answer);
     }
@@ -42,6 +44,36 @@ priorities	location	return
 
     public int solution(int[] priorities, int location) {
         int answer = 0;
+
+        Queue<Priority> qu = new LinkedList<>();
+        Queue<Integer> priorQu = new PriorityQueue<>(Collections.reverseOrder());
+        for (int i = 0; i < priorities.length; i++) {
+            Priority prior = new Priority();
+            prior.cnt = i;
+            prior.priority = priorities[i];
+
+            priorQu.add(priorities[i]);
+            qu.add(prior);
+        }
+
+        while (!qu.isEmpty()){
+            System.out.println(qu.peek().priority+"=="+priorQu.peek());
+            if(qu.peek().priority== priorQu.peek()){
+                answer++;
+                if(qu.peek().cnt == location){
+                    break;
+                }
+                qu.poll();
+                priorQu.poll();
+            }else{
+                qu.add(qu.poll());
+            }
+        }
         return answer;
+    }
+
+    class Priority {
+        int cnt;
+        int priority;
     }
 }
