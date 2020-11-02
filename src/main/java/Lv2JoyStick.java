@@ -1,3 +1,6 @@
+
+import java.util.LinkedList;
+
 public class Lv2JoyStick {
 
     /*
@@ -29,13 +32,45 @@ public class Lv2JoyStick {
 
     public static void main(String[] args){
 
-        int answer = new Lv2JoyStick().solution("JEROEN");
+        int answer = new Lv2JoyStick().solution("BBAABAAAAB");
 
         System.out.println(answer);
     }
 
     public int solution(String name) {
         int answer = 0;
-        return answer;
+        char[] arrName = name.toCharArray();
+        LinkedList<Integer> arrCnt = new LinkedList<>();
+        int minIndex = 0;
+
+        for (int i = 1; i < arrName.length; i++) {
+            if('A' != arrName[i]){
+                arrCnt.add(i);
+            }
+        }
+
+
+        while (!arrCnt.isEmpty()){
+
+            int minFisrt = Math.abs(arrCnt.peekFirst()-minIndex);
+            int minLast = Math.abs(arrCnt.peekLast()-arrName.length-minIndex);
+            System.out.println("minFisrt=="+minFisrt+"/minLast=="+minLast);
+            System.out.println("minIndex=="+minIndex);
+
+            if(Math.min(minFisrt, minLast) == minFisrt){
+                minIndex = arrCnt.peekFirst();
+                answer += minFisrt + Math.min(91-arrName[arrCnt.peekFirst()], arrName[arrCnt.peekFirst()]-65);
+                arrCnt.pollFirst();
+            }else{
+                minIndex = arrCnt.peekLast();
+                answer += minLast + Math.min(91-arrName[arrCnt.peekLast()], arrName[arrCnt.peekLast()]-65);
+                arrCnt.pollLast();
+            }
+
+            System.out.println(answer);
+        }
+
+
+        return answer+Math.min(91-arrName[0], arrName[0]-65);
     }
 }
