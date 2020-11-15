@@ -39,10 +39,10 @@ public class Lv2JoyStick {
         System.out.println(answer);
     }
     public int solution(String name) {
+        LinkedList<Integer> arrCnt = new LinkedList<>();
 
         int answer = 0;
         char[] arrName = name.toCharArray();
-        LinkedList<Integer> arrCnt = new LinkedList<>();
 
         int leftIdx = 0;
         int rightIdx = 0;
