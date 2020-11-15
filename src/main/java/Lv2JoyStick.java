@@ -1,5 +1,7 @@
 
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class Lv2JoyStick {
 
@@ -32,45 +34,49 @@ public class Lv2JoyStick {
 
     public static void main(String[] args){
 
-        int answer = new Lv2JoyStick().solution("BBAABAAAAB");
+        int answer = new Lv2JoyStick().solution("BBAAAAABB");
 
         System.out.println(answer);
     }
-
     public int solution(String name) {
+
         int answer = 0;
         char[] arrName = name.toCharArray();
         LinkedList<Integer> arrCnt = new LinkedList<>();
-        int minIndex = 0;
+
+        int leftIdx = 0;
+        int rightIdx = 0;
 
         for (int i = 1; i < arrName.length; i++) {
             if('A' != arrName[i]){
                 arrCnt.add(i);
+                if(i < arrName.length/2){
+                    leftIdx = i;
+                }else if( rightIdx == 0 ){
+                    rightIdx = arrName.length-i;
+                }
             }
+
         }
 
+        if(arrCnt.size() == 0){
+            return answer;
+        }
+
+        //최소거리를 구하기 위해 max값, min값을 구함
+        int minIdx = Math.min(leftIdx,rightIdx);
+        int maxIdx = Math.max(leftIdx,rightIdx);
+
+        int min = Math.min(arrCnt.peekLast(),arrName.length-arrCnt.peekFirst());
+        System.out.println(min);
+        min = Math.min(min, 2*minIdx+maxIdx);
+        System.out.println(min);
 
         while (!arrCnt.isEmpty()){
-
-            int minFisrt = Math.abs(arrCnt.peekFirst()-minIndex);
-            int minLast = Math.abs(arrCnt.peekLast()-arrName.length-minIndex);
-            System.out.println("minFisrt=="+minFisrt+"/minLast=="+minLast);
-            System.out.println("minIndex=="+minIndex);
-
-            if(Math.min(minFisrt, minLast) == minFisrt){
-                minIndex = arrCnt.peekFirst();
-                answer += minFisrt + Math.min(91-arrName[arrCnt.peekFirst()], arrName[arrCnt.peekFirst()]-65);
-                arrCnt.pollFirst();
-            }else{
-                minIndex = arrCnt.peekLast();
-                answer += minLast + Math.min(91-arrName[arrCnt.peekLast()], arrName[arrCnt.peekLast()]-65);
-                arrCnt.pollLast();
-            }
-
-            System.out.println(answer);
+            answer+=Math.min(91-arrName[arrCnt.peek()], arrName[arrCnt.peek()]-65);
+            arrCnt.poll();
         }
 
-
-        return answer+Math.min(91-arrName[0], arrName[0]-65);
+        return answer+Math.min(91-arrName[0], arrName[0]-65)+min;
     }
 }
