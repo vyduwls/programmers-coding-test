@@ -47,7 +47,6 @@ scoville	K	return
         }
 
         while ( scoQu.peek() <= K && scoQu.size()>=2){
-            System.out.println(scoQu.peek());
             int mix = scoQu.poll()+scoQu.poll()*2;
             scoQu.add(mix);
             answer++;
